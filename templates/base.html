@@ -33,7 +33,19 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="/about">About</a></li>
-            <li><a href="#">Login</a></li>
+            {% if not user %}
+              <li><a href="{{ login_url }}">Login</a></li>
+            {% else %}
+              <li class="dropdown">
+                  <a href="" class="dropdown-toggle" data-toggle="dropdown">
+                      {{ user.nickname() }} <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu">
+                      <li><a href="/topic/add">Add New Topic</a></li>
+                      <li><a href="{{ logout_url }}">Logout</a></li>
+                  </ul>
+              </li>
+              {% endif %}
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->

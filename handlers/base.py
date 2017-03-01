@@ -1,3 +1,7 @@
+from google.appengine.api import users
+from models.topic import Topic
+from helpers.tools import DATE_TIME_FORMAT
+
 import webapp2
 import os
 import jinja2
@@ -22,9 +26,22 @@ class BaseHandler(webapp2.RequestHandler):
     def render_template(self, view_filename, params=None):
         if not params:
             params = {}
+
+        # cookies
         cookie = self.request.cookies.get("cookie_law")
         if cookie:
             params['cookies'] = True
+
+        # google login
+        user = users.get_current_user()
+        if user:
+            params['user'] = user
+            params['logout_url'] = users.create_logout_url('/')
+        else:
+            params['login_url'] = users.create_login_url('/')
+
+        # Slo date time format
+        params['slo_date'] = DATE_TIME_FORMAT
 
         template = jinja_env.get_template(view_filename)
         return self.response.out.write(template.render(params))
@@ -32,12 +49,14 @@ class BaseHandler(webapp2.RequestHandler):
 
 class MainHandler(BaseHandler):
     def get(self):
-        return self.render_template("main.html")
+        topics = Topic.query().fetch()
+        params = {'topics': topics}
+        return self.render_template("base/main.html", params=params)
 
 
 class AboutHandler(BaseHandler):
     def get(self):
-        return self.render_template('about.html')
+        return self.render_template('base/about.html')
 
 
 class CookiesAlertHandler(BaseHandler):

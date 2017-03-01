@@ -12,7 +12,10 @@ kjer bodo se bodo uporabniki lahko pogovarjali o
 različnih temah. 
 
 # Work in progress
-27.2.2017 - first commit - postavitev projekta 
+27.2.2017 - first commit - postavitev projekta
+
+1.3.2017 - forum topics and details - seznam tem na forumu in 
+podrobnosti teme
 
 # Copyright 
 Podlanišče 27.2.2017 

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %} Topic Details {% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 class="page-header text-center">{{ topic.title }}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <span class="bold">By</span> {{ topic.author_email }}
+                    <span class="bold pull-right">Posted: {{ topic.created_at.strftime(slo_date) }}</span>
+                </div>
+                <div class="panel-body">
+                    {{ topic.content }}
+                </div>
+                <div class="panel-footer">
+                    <a href="/" role="button" class="btn btn-danger btn-sm">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                        Back
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
