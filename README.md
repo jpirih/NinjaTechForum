@@ -17,6 +17,8 @@ različnih temah.
 1.3.2017 - forum topics and details - seznam tem na forumu in 
 podrobnosti teme
 
+5.3.2017 - custom user model user- profile - dodan User model user profile
+
 # Copyright 
 Podlanišče 27.2.2017 
 Janko Pirih 

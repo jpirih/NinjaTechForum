@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}My Profile{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 class="page-header text-center">{{ user.nickname }} - User Profile</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div>
+                        <img src="/assets/custom/img/user_profile.png" alt="profile_img" class="img img-rounded img-responsive">
+                    </div>
+                    <h3>
+                        {{ user.first_name }} {{ user.last_name }} -
+                        <span class="text-muted">{{ user.nickname }}</span>
+                    </h3>
+                    <h5>{{ user.email }}</h5>
+                    <h5>{{ user.birth_date }}</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3>My topics</h3>
+                    <br>
+                    {% if my_topics %}
+                        <table class=" table table-responsive table-bordered table-striped table-hover">
+                            <thead>
+                                <tr class="table-header">
+                                    <th>Title</th>
+                                    <th>Created at</th>
+                                    <th>Last update</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for topic in my_topics %}
+                                <tr>
+                                    <td><a href="/topic/{{ topic.key.id() }}">{{ topic.title }}</a></td>
+                                    <td>{{ topic.created_at.strftime(slo_date) }}</td>
+                                    <td>{{ topic.updated_at.strftime(slo_date) }}</td>
+                                </tr>
+                                {% endfor  %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <div class="alert alert-info">
+                            <span class="glyphicon glyphicon-info-sign"></span>
+                            You did not create any topic so far go ahead and create a new topic
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

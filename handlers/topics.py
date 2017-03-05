@@ -11,8 +11,8 @@ class CreateTopicHandler(BaseHandler):
         if user:
             return self.render_template('topics/topic_new.html')
         else:
-            login_message = LOGIN_MESSAGE
-            params = {"login_message": login_message}
+            message = LOGIN_MESSAGE
+            params = {"message": message}
             return self.render_template('topics/topic_new.html', params=params)
 
     def post(self):
@@ -25,8 +25,9 @@ class CreateTopicHandler(BaseHandler):
             new_topic.put()
             return self.redirect_to('main-page')
         else:
-            login_message = LOGIN_MESSAGE
-            return self.write(login_message)
+            message = LOGIN_MESSAGE
+            params = {'message': message}
+            return self.render_template('error.html', params=params)
 
 
 class TopicDetailsHandler(BaseHandler):

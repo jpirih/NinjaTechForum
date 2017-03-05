@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %} User registration {% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 class="page-header text-center">
+                User registration
+            </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            <form action="" method="post" class="form form-horizontal">
+        <div class="form-group">
+            <label for="nickname" class="control-label col-sm-4">Nickname</label>
+            <div class="col-sm-8">
+                <input type="text" name="nickname" disabled id="nickname" value="{{ user.nickname }}" class="form-control">
+            </div>
+        </div>
+            <div class="form-group">
+                <label for="email" class="control-label col-sm-4">Email</label>
+                <div class="col-sm-8">
+                    <input type="text" name="email" disabled id="email" value="{{ user.email }}" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="first_name" class="control-label col-sm-4">First Name</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="first_name" name="first_name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="last_name" class="control-label col-sm-4">Last Name</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="last_name" name="last_name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="birth_date" class="control-label col-sm-4">Birth Date</label>
+                <div class="col-sm-8">
+                    <input type="date" id="birth_date" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-8 col-sm-offset-4">
+                    <button type="submit" class="btn btn-success btn-block">
+                        <span class=" glyphicon glyphicon-ok"></span> OK
+                    </button>
+                </div>
+            </div>
+    </form>
+        </div>
+    </div>
+{% endblock %}

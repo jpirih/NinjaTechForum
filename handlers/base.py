@@ -6,6 +6,7 @@ import webapp2
 import os
 import jinja2
 
+from models.user import User
 
 template_dir = os.path.join(os.path.dirname(__file__), "../templates")
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir), autoescape=False)
@@ -35,10 +36,10 @@ class BaseHandler(webapp2.RequestHandler):
         # google login
         user = users.get_current_user()
         if user:
-            params['user'] = user
+            params['user'] = User.get_or_create(user.email(), user.nickname())
             params['logout_url'] = users.create_logout_url('/')
         else:
-            params['login_url'] = users.create_login_url('/')
+            params['login_url'] = users.create_login_url('/login')
 
         # Slo date time format
         params['slo_date'] = DATE_TIME_FORMAT
