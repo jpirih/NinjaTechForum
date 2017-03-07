@@ -13,6 +13,7 @@
     <div class="row">
         <div class="col-sm-6 col-sm-offset-3">
             <form action="" method="post" class="form form-horizontal">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
         <div class="form-group">
             <label for="nickname" class="control-label col-sm-4">Nickname</label>
             <div class="col-sm-8">

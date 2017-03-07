@@ -2,6 +2,7 @@ from handlers.base import BaseHandler
 from models.topic import Topic
 from models.user import User
 from helpers.tools import OWNER_MESSAGE
+from helpers.decorators import validate_csrf
 from google.appengine.api import users
 
 
@@ -12,8 +13,9 @@ class UserLoginHandler(BaseHandler):
         if user and user.activated:
             return self.redirect_to('main-page')
         else:
-            return self.render_template('users/user_registration.html')
+            return self.render_template_with_csrf('users/user_registration.html')
 
+    @validate_csrf
     def post(self):
         current_user = users.get_current_user()
         user = User.query(User.email == current_user.email()).get()
