@@ -19,6 +19,8 @@ podrobnosti teme
 
 5.3.2017 - custom user model user- profile - dodan User model user profile
 
+7.3.2017 - csrf_token for add topic and add comment - dodano pisanje komentarjev 
+
 # Copyright 
 Podlanišče 27.2.2017 
 Janko Pirih 

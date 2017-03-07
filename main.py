@@ -4,6 +4,7 @@ import webapp2
 from handlers.base import MainHandler, AboutHandler, CookiesAlertHandler
 from handlers.topics import CreateTopicHandler, TopicDetailsHandler
 from handlers.users import UserLoginHandler, UserProfileHandler
+from handlers.comments import CreateCommentHandler
 
 
 app = webapp2.WSGIApplication([
@@ -12,6 +13,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/set-cookie', CookiesAlertHandler, name="set-cookie"),
     webapp2.Route('/topic/add', CreateTopicHandler, name="add-topic"),
     webapp2.Route('/topic/<topic_id:\d+>', TopicDetailsHandler, name="topic-details"),
+    webapp2.Route('/topic/<topic_id:\d+>/new-comment', CreateCommentHandler, name="create-comment"),
     webapp2.Route('/login', UserLoginHandler, name="user-login"),
     webapp2.Route('/user/<user_id:\d+>', UserProfileHandler, name="user-profile"),
 ], debug=True)

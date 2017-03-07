@@ -24,6 +24,7 @@
             <div class="well">
                 <!-- create topic form -->
                 <form action="" method="post" class="form-horizontal">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
                     <div class="form-group">
                         <label for="title" class="control-label col-sm-4">Title</label>
                         <div class="col-sm-8">

@@ -50,7 +50,8 @@ class BaseHandler(webapp2.RequestHandler):
 
 class MainHandler(BaseHandler):
     def get(self):
-        topics = Topic.query().fetch()
+        topics = Topic.query().order(-Topic.created_at).fetch()
+
         params = {'topics': topics}
         return self.render_template("base/main.html", params=params)
 
