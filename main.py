@@ -5,6 +5,7 @@ from handlers.base import MainHandler, AboutHandler, CookiesAlertHandler
 from handlers.topics import CreateTopicHandler, TopicDetailsHandler
 from handlers.users import UserLoginHandler, UserProfileHandler
 from handlers.comments import CreateCommentHandler
+from workers.email_comment_worker import EmailNewCommentWorker
 
 
 app = webapp2.WSGIApplication([
@@ -16,4 +17,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/topic/<topic_id:\d+>/new-comment', CreateCommentHandler, name="create-comment"),
     webapp2.Route('/login', UserLoginHandler, name="user-login"),
     webapp2.Route('/user/<user_id:\d+>', UserProfileHandler, name="user-profile"),
+
+    # tasks
+    webapp2.Route("/task/email-new-comment", EmailNewCommentWorker, name="email-comment"),
 ], debug=True)

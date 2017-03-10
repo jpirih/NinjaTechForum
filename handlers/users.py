@@ -8,6 +8,7 @@ from google.appengine.api import users
 
 class UserLoginHandler(BaseHandler):
     def get(self):
+        """ user login  handler """
         current_ueser = users.get_current_user()
         user = User.query(User.email == current_ueser.email()).get()
         if user and user.activated:
@@ -17,6 +18,7 @@ class UserLoginHandler(BaseHandler):
 
     @validate_csrf
     def post(self):
+        """ user first time login save to datastore """
         current_user = users.get_current_user()
         user = User.query(User.email == current_user.email()).get()
 
@@ -35,6 +37,7 @@ class UserLoginHandler(BaseHandler):
 
 class UserProfileHandler(BaseHandler):
     def get(self, user_id):
+        """ user profile page view """
         current_user = users.get_current_user()
         user = User.get_by_id(int(user_id))
         my_topics = Topic.query(Topic.author_email == user.email)

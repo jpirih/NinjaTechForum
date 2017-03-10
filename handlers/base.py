@@ -69,9 +69,12 @@ class BaseHandler(webapp2.RequestHandler):
         params['slo_date'] = DATE_TIME_FORMAT
 
         # csrf token
-        csrf_token = str(uuid.uuid4())
-        memcache.add(key=csrf_token, value=user.email(), time=3600)
-        params['csrf_token'] = csrf_token
+        if not user:
+            params["csrf_token"] = ""
+        else:
+            csrf_token = str(uuid.uuid4())
+            memcache.add(key=csrf_token, value=user.email(), time=3600)
+            params['csrf_token'] = csrf_token
 
         template = jinja_env.get_template(view_filename)
         return self.response.out.write(template.render(params))
@@ -79,6 +82,7 @@ class BaseHandler(webapp2.RequestHandler):
 
 class MainHandler(BaseHandler):
     def get(self):
+        """ forum main page view """
         topics = Topic.query().order(-Topic.created_at).fetch()
 
         params = {'topics': topics}
@@ -87,10 +91,12 @@ class MainHandler(BaseHandler):
 
 class AboutHandler(BaseHandler):
     def get(self):
+        """ forum about page view """
         return self.render_template('base/about.html')
 
 
 class CookiesAlertHandler(BaseHandler):
     def post(self):
+        """ cookie alert message agree to cookies policies """
         self.response.set_cookie(key="cookie_law", value="accepted")
         return self.redirect_to("main-page")

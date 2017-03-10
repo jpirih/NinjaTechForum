@@ -8,3 +8,10 @@ class Topic(ndb.Model):
     created_at = ndb.DateTimeProperty(auto_now_add=True)
     updated_at = ndb.DateTimeProperty(auto_now=True)
     deleted = ndb.BooleanProperty(default=False)
+
+    @classmethod
+    def crate(cls, content, title, author):
+        topic = cls(title=title, content=content, author_email=author.email())
+        topic.put()
+
+        return topic
