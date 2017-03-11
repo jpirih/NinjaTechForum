@@ -13,5 +13,11 @@ class Topic(ndb.Model):
     def crate(cls, content, title, author):
         topic = cls(title=title, content=content, author_email=author.email())
         topic.put()
-
         return topic
+
+    @classmethod
+    def delete(cls, topic):
+        topic.deleted = True
+        topic.put()
+        return topic
+

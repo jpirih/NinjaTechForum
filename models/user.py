@@ -1,4 +1,5 @@
 from google.appengine.ext import ndb
+from google.appengine.api import users
 
 
 class User(ndb.Model):
@@ -19,3 +20,32 @@ class User(ndb.Model):
             user.put()
 
         return user
+
+    @classmethod
+    def is_admin(cls, current_user):
+        user = cls.query(cls.email == current_user.email).get()
+        if user.admin:
+            return True
+        else:
+            return False
+
+    @classmethod
+    def logged_in_user(cls):
+        current_user = users.get_current_user()
+        if current_user:
+            user = cls.query(cls.email == current_user.email()).get()
+            return user
+        else:
+            user = None
+            return user
+
+    @staticmethod
+    def is_author(current_user, item):
+        if current_user.email == item.author_email:
+            return True
+        else:
+            return False
+
+
+
+

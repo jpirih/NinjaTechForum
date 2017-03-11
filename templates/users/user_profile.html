@@ -56,6 +56,40 @@
                     {% endif %}
                 </div>
             </div>
-        </div>
+            <br>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3>My Comments</h3>
+                    <br>
+                    {% if my_comments %}
+                        <table class=" table table-responsive table-bordered table-striped table-hover">
+                            <thead>
+                                <tr class="table-header">
+                                    <th>Content</th>
+                                    <th>Created at</th>
+                                    <th>Last update</th>
+                                    <th>Topic Title</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for comment in my_comments %}
+                                <tr>
+                                    <td><a href="#">{{ comment.content }}</a></td>
+                                    <td>{{ comment.created_at.strftime(slo_date) }}</td>
+                                    <td>{{ comment.updated_at.strftime(slo_date) }}</td>
+                                    <td>{{ comment.topic_title }}</td>
+                                </tr>
+                                {% endfor  %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <div class="alert alert-info">
+                            <span class="glyphicon glyphicon-info-sign"></span>
+                            You did not create any topic so far go ahead and create a new topic
+                        </div>
+                    {% endif %}
+                </div>
+        </d iv>
     </div>
+
 {% endblock %}

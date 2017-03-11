@@ -23,6 +23,14 @@
                         <span class="glyphicon glyphicon-chevron-left"></span>
                         Back
                     </a>
+                    {% if user.email == topic.author_email or user.admin %}
+                        <form action="/topic/{{ topic.key.id() }}/delete" class="delete-btn pull-right" method="post">
+                        <button type="submit" class="btn btn-danger">
+                            Delete
+                        </button>
+                    </form>
+                    {% endif %}
+
                 </div>
             </div>
         </div>

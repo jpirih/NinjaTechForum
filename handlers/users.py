@@ -1,4 +1,5 @@
 from handlers.base import BaseHandler
+from models.comment import Comment
 from models.topic import Topic
 from models.user import User
 from helpers.tools import OWNER_MESSAGE
@@ -41,9 +42,10 @@ class UserProfileHandler(BaseHandler):
         current_user = users.get_current_user()
         user = User.get_by_id(int(user_id))
         my_topics = Topic.query(Topic.author_email == user.email)
-        params = {'my_topics': my_topics}
+        my_comments = Comment.query(Comment.author_email == user.email)
+        params = {'my_topics': my_topics, 'my_comments': my_comments}
 
-        if current_user.email() == user.email or user.admin:
+        if current_user.email() == user.email or User.is_admin(current_user):
             return self.render_template('users/user_profile.html', params=params)
         else:
             message = OWNER_MESSAGE

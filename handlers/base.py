@@ -83,11 +83,10 @@ class BaseHandler(webapp2.RequestHandler):
 class MainHandler(BaseHandler):
     def get(self):
         """ forum main page view """
-        topics = Topic.query().order(-Topic.created_at).fetch()
+        topics = Topic.query(Topic.deleted == False).order(-Topic.created_at).fetch()
 
         params = {'topics': topics}
         return self.render_template("base/main.html", params=params)
-
 
 class AboutHandler(BaseHandler):
     def get(self):

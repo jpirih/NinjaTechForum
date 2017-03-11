@@ -17,7 +17,7 @@ class CreateTopicHandler(BaseHandler):
     @validate_csrf
     def post(self):
         """ save new topic  to datastore """
-        user = users.get_current_user()
+        user = User.logged_in_user()
 
         title = self.request.get('title')
         content = self.request.get('content')
@@ -30,18 +30,27 @@ class CreateTopicHandler(BaseHandler):
 
 class TopicDetailsHandler(BaseHandler):
     def get(self, topic_id):
-        # topic details and topic comments
+        """ topic details and topic related comments """
+
+        user = User.logged_in_user()
+
         topic = Topic.get_by_id(int(topic_id))
         comments = Comment.query(Comment.topic_id == int(topic_id)).order(Comment.created_at).fetch()
 
-        parms = {'topic': topic, 'comments': comments}
+        parms = {'topic': topic, 'comments': comments, 'user': user}
         return self.render_template_with_csrf('topics/topic_details.html', params=parms)
 
 
 class DeleteTopicHandler(BaseHandler):
+    @login_required
     def post(self, topic_id):
         topic = Topic.get_by_id(int(topic_id))
-        current_user = users.get_current_user()
-        user = User.get_or_create(email=current_user.email(), nickname=current_user.nickname())
+        user = User.logged_in_user()
+        if User.is_admin(user) or User.is_author(user, topic):
+            Topic.delete(topic)
+            return self.redirect_to('main-page')
+        else:
+            return self.write('only author or admin can delete topic')
+
 
 

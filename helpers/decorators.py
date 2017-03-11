@@ -21,6 +21,8 @@ def login_required(handler):
     @wraps(handler)
     def wrapper(self, *args, **kwargs):
         current_user = users.get_current_user()
+        if not current_user:
+            return self.redirect(users.create_login_url('/login'))
         user = User.get_or_create(email=current_user.email(), nickname=current_user.nickname())
 
         if user:
