@@ -11,7 +11,7 @@ class Topic(ndb.Model):
 
     @classmethod
     def crate(cls, content, title, author):
-        topic = cls(title=title, content=content, author_email=author.email())
+        topic = cls(title=title, content=content, author_email=author.email)
         topic.put()
         return topic
 

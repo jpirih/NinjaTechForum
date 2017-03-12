@@ -44,6 +44,7 @@ class TopicDetailsHandler(BaseHandler):
 class DeleteTopicHandler(BaseHandler):
     @login_required
     def post(self, topic_id):
+        """ topic soft delete hahdler only by author or admin """
         topic = Topic.get_by_id(int(topic_id))
         user = User.logged_in_user()
         if User.is_admin(user) or User.is_author(user, topic):

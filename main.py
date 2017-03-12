@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 import webapp2
+
+from crons.delete_topics import DeleteTopicCron
 from handlers.base import MainHandler, AboutHandler, CookiesAlertHandler
 from handlers.topics import CreateTopicHandler, TopicDetailsHandler, DeleteTopicHandler
 from handlers.users import UserLoginHandler, UserProfileHandler
@@ -26,4 +28,7 @@ app = webapp2.WSGIApplication([
 
     # tasks
     webapp2.Route("/task/email-new-comment", EmailNewCommentWorker, name="email-comment"),
+
+    # cron jobs
+    webapp2.Route("/cron/delete-topics", DeleteTopicCron, name="cron-delete-topics")
 ], debug=True)
