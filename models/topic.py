@@ -21,3 +21,14 @@ class Topic(ndb.Model):
         topic.put()
         return topic
 
+    @classmethod
+    def reload(cls, topic):
+        topic.deleted = False
+        topic.put()
+        return topic
+
+    @classmethod
+    def destroy(cls, topic):
+        return topic.key.delete()
+
+

@@ -3,10 +3,13 @@
 import webapp2
 
 from crons.delete_topics import DeleteTopicCron
+from crons.delete_comments import DeleteCommentsCron
 from handlers.base import MainHandler, AboutHandler, CookiesAlertHandler
-from handlers.topics import CreateTopicHandler, TopicDetailsHandler, DeleteTopicHandler
+from handlers.topics import CreateTopicHandler, TopicDetailsHandler, DeleteTopicHandler, DeletedTopicsListHandler
+from handlers.topics import ReloadTopic, DestroyTopic
 from handlers.users import UserLoginHandler, UserProfileHandler
-from handlers.comments import CreateCommentHandler
+from handlers.comments import CreateCommentHandler, DeleteCommentHandler
+from handlers.subscriptions import SubscribeToNewTopics
 from workers.email_comment_worker import EmailNewCommentWorker
 
 
@@ -20,7 +23,12 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/topic/add', CreateTopicHandler, name="add-topic"),
     webapp2.Route('/topic/<topic_id:\d+>', TopicDetailsHandler, name="topic-details"),
     webapp2.Route('/topic/<topic_id:\d+>/delete', DeleteTopicHandler, name="topic-delete"),
+    webapp2.Route('/topic/<topic_id:\d+>/reload', ReloadTopic, name="topic-reload"),
+    webapp2.Route('/topic/<topic_id:\d+>/destroy', DestroyTopic, name="topic-destroy"),
+    webapp2.Route('/topics-deleted-list', DeletedTopicsListHandler, name="topic-deleted-list"),
     webapp2.Route('/topic/<topic_id:\d+>/new-comment', CreateCommentHandler, name="create-comment"),
+    webapp2.Route('/comment/<comment_id:\d+>/delete', DeleteCommentHandler , name="comment-delete"),
+    webapp2.Route('/subscribe/new-topics', SubscribeToNewTopics, name="subscribe-new-topics"),
 
     # users routes
     webapp2.Route('/login', UserLoginHandler, name="user-login"),
@@ -30,5 +38,6 @@ app = webapp2.WSGIApplication([
     webapp2.Route("/task/email-new-comment", EmailNewCommentWorker, name="email-comment"),
 
     # cron jobs
-    webapp2.Route("/cron/delete-topics", DeleteTopicCron, name="cron-delete-topics")
+    webapp2.Route("/cron/delete-topics", DeleteTopicCron, name="cron-delete-topics"),
+    webapp2.Route("/cron/delete-comments", DeleteCommentsCron, name="cron-delete-comments"),
 ], debug=True)

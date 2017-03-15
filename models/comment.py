@@ -20,3 +20,10 @@ class Comment(ndb.Model):
         taskqueue.add(url='/task/email-new-comment', params={"topic_author_email": topic.author_email, "topic_title": topic.title, "topic_id": topic.key.id()})
 
         return comment
+
+    @classmethod
+    def delete(cls, comment):
+        comment.deleted = True
+        comment.put()
+        return comment
+

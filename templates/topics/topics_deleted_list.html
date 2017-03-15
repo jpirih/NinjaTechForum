@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %} List of Deleted Topics {% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 class="page-header text-center">List of Deleted topics</h1>
+        </div>
+    </div>
+    <div class="col-sm-8">
+            {% if topics %}
+                <table class="table table-responsive table-bordered table-hover">
+                    <thead>
+                    <tr class="table-header">
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Deleted</th>
+                        <th>Reload</th>
+                        <th>Destroy</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for topic in topics %}
+                            <tr>
+                                <td><a href="/topic/{{ topic.key.id() }}">{{ topic.title }}</a></td>
+                                <td>{{ topic.author_email }}</td>
+                                <td>{{ topic.updated_at.strftime(slo_date) }}</td>
+                                <td>
+                                    <form action="/topic/{{ topic.key.id() }}/reload" method="post">
+                                        <button type="submit" class="btn btn-info delete-btn">
+                                            Reload
+                                        </button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="/topic/{{ topic.key.id() }}/destroy" method="post">
+                                        <button type="submit" class="btn btn-danger  delete-btn">
+                                            Destroy
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="alert alert-info">
+                    <span class="glyphicon glyphicon-info-sign"></span>
+                    There is no Topics maked as deleted at the moment :)
+                </div>
+            {% endif %}
+        </div>
+{% endblock %}

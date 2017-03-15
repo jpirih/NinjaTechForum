@@ -2,7 +2,10 @@
 
 {% block title %} Topic Details {% endblock %}
 
+
 {% block content %}
+    <!-- delete topic modal  -->
+    {% include 'includes/delete_topic_modal.html' %}
     <div class="row">
         <div class="col-sm-12">
             <h1 class="page-header text-center">{{ topic.title }}</h1>
@@ -24,13 +27,11 @@
                         Back
                     </a>
                     {% if user.email == topic.author_email or user.admin %}
-                        <form action="/topic/{{ topic.key.id() }}/delete" class="delete-btn pull-right" method="post">
-                        <button type="submit" class="btn btn-danger">
-                            Delete
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-danger pull-right" data-toggle="modal" data-target="#deleteTopicModal">
+                          Delete
                         </button>
-                    </form>
                     {% endif %}
-
                 </div>
             </div>
         </div>
@@ -46,6 +47,13 @@
                         </div>
                         <div class="panel-body">
                             {{ comment.content }}
+                        </div>
+                        <div class="panel-footer">
+                            {% if user.email == comment.author_email or user.admin %}
+                            <form action="/comment/{{ comment.key.id() }}/delete" method="post">
+                                <button class="btn btn-danger delete-btn">Delete</button>
+                            </form>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

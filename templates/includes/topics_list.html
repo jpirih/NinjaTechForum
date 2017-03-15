@@ -1,0 +1,28 @@
+<div class="col-sm-8">
+            {% if topics %}
+                <table class="table table-responsive table-bordered table-hover">
+                    <thead>
+                    <tr class="table-header">
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Created At</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for topic in topics %}
+                            <tr>
+                                <td><a href="/topic/{{ topic.key.id() }}">{{ topic.title }}</a></td>
+                                <td>{{ topic.author_email }}</td>
+                                <td>{{ topic.created_at.strftime(slo_date) }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="alert alert-info">
+                    <span class="glyphicon glyphicon-info-sign"></span>
+                    There is no Topics on Our forum at the moment. Login
+                    and create first topic
+                </div>
+            {% endif %}
+        </div>
