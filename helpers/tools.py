@@ -1,4 +1,6 @@
 DATE_TIME_FORMAT = '%d.%m.%y @ %H:%M:%S'
-LOGIN_MESSAGE = "You need to be logged in before you can create new Topic"
-OWNER_MESSAGE = "This profile page can see only his owner or site administrator"
 
+def show_info_page(self, message):
+    message = message
+    params = {"message": message}
+    return self.render_template("error", params=params)

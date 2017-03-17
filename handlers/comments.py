@@ -1,4 +1,6 @@
 from handlers.base import BaseHandler
+from helpers.messages import COMMENT_AUTHOR
+from helpers.tools import show_info_page
 
 from helpers.decorators import validate_csrf, login_required
 from models.comment import Comment
@@ -30,7 +32,7 @@ class DeleteCommentHandler(BaseHandler):
             Comment.delete(comment)
             return self.redirect_to("topic-details", topic_id=comment.topic_id)
         else:
-            return self.write('only author or admin can delete topic')
+            return show_info_page(message=COMMENT_AUTHOR)
 
 
 

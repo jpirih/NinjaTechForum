@@ -20,7 +20,7 @@ class MainPageTests(unittest.TestCase):
 
         """ Uncomment the stubs that you need to run tests. """
         self.testbed.init_datastore_v3_stub()
-        # self.testbed.init_memcache_stub()
+        self.testbed.init_memcache_stub()
         # self.testbed.init_mail_stub()
         # self.testbed.init_taskqueue_stub()
         self.testbed.init_user_stub()

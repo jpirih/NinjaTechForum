@@ -1,1 +1,2 @@
-SENDGRID_API_KEY = "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"
+SENDGRID_API_KEY = "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"
+MY_EMAIL = "janko.pirih@gmail.com"

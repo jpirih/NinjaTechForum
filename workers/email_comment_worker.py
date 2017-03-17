@@ -8,6 +8,6 @@ class EmailNewCommentWorker(BaseHandler):
         topic_title = self.request.get("topic_title")
         topic_id = self.request.get("topic_id")
 
-        email = new_comment_emil(recipient=topic_author_email, topic_title=topic_title, topic_id=topic_id)
+        email = new_comment_emil(recipient=topic_author_email, topic_title=topic_title.encode("utf-8"), topic_id=topic_id)
         return email
 

@@ -1,5 +1,7 @@
 from handlers.base import BaseHandler
 from helpers.decorators import validate_csrf, login_required
+from helpers.tools import show_info_page
+from helpers.messages import TOPIC_AUTHOR
 
 
 from models.comment import Comment
@@ -51,7 +53,7 @@ class DeleteTopicHandler(BaseHandler):
             Topic.delete(topic)
             return self.redirect_to('main-page')
         else:
-            return self.write('only author or admin can delete topic')
+            return show_info_page(self, message=TOPIC_AUTHOR)
 
 
 class ReloadTopic(BaseHandler):
@@ -64,7 +66,7 @@ class ReloadTopic(BaseHandler):
             Topic.reload(topic)
             return self.redirect_to('main-page')
         else:
-            return self.write('only admin can delete topic')
+            return self.write('only admin can reload topic')
 
 
 class DestroyTopic(BaseHandler):
