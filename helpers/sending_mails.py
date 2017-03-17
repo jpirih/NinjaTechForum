@@ -1,6 +1,5 @@
-from helpers.secret import SENDGRID_API_KEY, MY_EMAIL
 from libs import sendgrid
-
+from libs.secret import SENDGRID_API_KEY
 from libs.sendgrid.helpers.mail import *
 
 

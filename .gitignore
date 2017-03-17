@@ -27,7 +27,7 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
-helpers/secret.py
+libs/secret.py
 
 
 # PyInstaller
