@@ -4,9 +4,10 @@ import webapp2
 
 from crons.delete_topics import DeleteTopicCron
 from crons.delete_comments import DeleteCommentsCron
+from crons.newest_topics_cron import NewestTopicsCron
 from handlers.base import MainHandler, AboutHandler, CookiesAlertHandler
 from handlers.topics import CreateTopicHandler, TopicDetailsHandler, DeleteTopicHandler, DeletedTopicsListHandler
-from handlers.topics import ReloadTopic, DestroyTopic
+from handlers.topics import ReloadTopicHandler, DestroyTopicHandler
 from handlers.users import UserLoginHandler, UserProfileHandler
 from handlers.comments import CreateCommentHandler, DeleteCommentHandler
 from handlers.subscriptions import SubscribeToNewTopics
@@ -23,8 +24,8 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/topic/add', CreateTopicHandler, name="add-topic"),
     webapp2.Route('/topic/<topic_id:\d+>', TopicDetailsHandler, name="topic-details"),
     webapp2.Route('/topic/<topic_id:\d+>/delete', DeleteTopicHandler, name="topic-delete"),
-    webapp2.Route('/topic/<topic_id:\d+>/reload', ReloadTopic, name="topic-reload"),
-    webapp2.Route('/topic/<topic_id:\d+>/destroy', DestroyTopic, name="topic-destroy"),
+    webapp2.Route('/topic/<topic_id:\d+>/reload', ReloadTopicHandler, name="topic-reload"),
+    webapp2.Route('/topic/<topic_id:\d+>/destroy', DestroyTopicHandler, name="topic-destroy"),
     webapp2.Route('/topics-deleted-list', DeletedTopicsListHandler, name="topic-deleted-list"),
     webapp2.Route('/topic/<topic_id:\d+>/new-comment', CreateCommentHandler, name="create-comment"),
     webapp2.Route('/comment/<comment_id:\d+>/delete', DeleteCommentHandler , name="comment-delete"),
@@ -40,4 +41,5 @@ app = webapp2.WSGIApplication([
     # cron jobs
     webapp2.Route("/cron/delete-topics", DeleteTopicCron, name="cron-delete-topics"),
     webapp2.Route("/cron/delete-comments", DeleteCommentsCron, name="cron-delete-comments"),
+    webapp2.Route("/cron/email-newest-topics", NewestTopicsCron, name="cron-newest-topics"),
 ], debug=True)

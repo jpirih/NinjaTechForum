@@ -8,3 +8,8 @@ cron:
   url: /cron/delete-comments
   schedule: every friday 22:00
   timezone: Europe/Ljubljana
+
+- description: Send mail with the newest and hotest topic links
+  url: /cron/email-newest-topics
+  schedule: every day 10:00
+  timezone: Europe/Ljubljana

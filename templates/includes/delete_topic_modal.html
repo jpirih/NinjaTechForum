@@ -14,8 +14,9 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             <form action="/topic/{{ topic.key.id() }}/delete" class="delete-btn pull-right" method="post">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
                     <button type="submit" class="btn btn-danger">
-                        Delete
+                            Delete
                     </button>
             </form>
       </div>

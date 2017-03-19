@@ -5,23 +5,26 @@
 {% block content %}
     <div class="row">
         <div class="col-sm-12">
-            <h1 class="page-header text-center">Error Page</h1>
+            <h1 class="page-header text-center">Info Page</h1>
         </div>
     </div>
     <div class="row">
         <div class="col-sm-6">
-            <img src="/assets/custom/img/warning.png" alt="warning-sign" width="300" height="300" class="img img-responsive img-rounded">
+            <img src="/assets/custom/img/info.png" alt="info-sign" width="300" height="300" class="img img-responsive img-rounded">
         </div>
         <div class="col-sm-6">
-            <div class="panel panel-warning">
+            <div class="panel panel-info">
                 <div class="panel-heading">
-                    Error message
+                    Info message
                 </div>
                 <div class="panel-body">
                     <div class="well">
-                        <span class="glyphicon glyphicon-warning-sign"></span>
+                        <span class="glyphicon glyphicon-info-sign"></span>
                         {{ message }}
                     </div>
+                </div>
+                <div class="panel-footer">
+                    <a href="/" class="btn btn-sm btn-success">Home</a>
                 </div>
             </div>
         </div>

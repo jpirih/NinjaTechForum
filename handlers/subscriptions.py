@@ -1,5 +1,7 @@
 from handlers.base import BaseHandler
 from models.subscription import Subscription
+from helpers.messages import SUBSCRIBTION_EXIST, SUBSCRIBTION_NEW
+
 
 
 class SubscribeToNewTopics(BaseHandler):
@@ -9,6 +11,6 @@ class SubscribeToNewTopics(BaseHandler):
         subscriber = Subscription.query(Subscription.email == mail)
         if not subscriber:
             Subscription.create(email=mail)
-            return self.write("Thank you for your subscription")
+            return self.render_template("error.html", params={"message": SUBSCRIBTION_NEW} )
         else:
-            return self.write("You are already subscribed")
+            return self.render_template("error.html", params={"message": SUBSCRIBTION_EXIST})

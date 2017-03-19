@@ -3,7 +3,6 @@ from models.comment import Comment
 from models.topic import Topic
 from models.user import User
 from helpers.messages import OWNER_MESSAGE
-from helpers.tools import show_info_page
 from helpers.decorators import validate_csrf
 from google.appengine.api import users
 
@@ -49,5 +48,5 @@ class UserProfileHandler(BaseHandler):
         if current_user.email() == user.email or User.is_admin(current_user):
             return self.render_template('users/user_profile.html', params=params)
         else:
-            return show_info_page(message=OWNER_MESSAGE)
+            return self.render_template("error.html", params={"message": OWNER_MESSAGE})
 

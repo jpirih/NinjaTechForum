@@ -28,14 +28,16 @@
                                 <td>{{ topic.updated_at.strftime(slo_date) }}</td>
                                 <td>
                                     <form action="/topic/{{ topic.key.id() }}/reload" method="post">
-                                        <button type="submit" class="btn btn-info delete-btn">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                                        <button type="submit" class="btn btn-info btn-sm delete-btn">
                                             Reload
                                         </button>
                                     </form>
                                 </td>
                                 <td>
                                     <form action="/topic/{{ topic.key.id() }}/destroy" method="post">
-                                        <button type="submit" class="btn btn-danger  delete-btn">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                                        <button type="submit" class="btn btn-danger btn-sm  delete-btn">
                                             Destroy
                                         </button>
                                     </form>

@@ -1,8 +1,6 @@
 from handlers.base import BaseHandler
 from helpers.decorators import validate_csrf, login_required
-from helpers.tools import show_info_page
-from helpers.messages import TOPIC_AUTHOR
-
+from helpers.messages import TOPIC_AUTHOR, ADMIN_RELOAD, ADMIN_DELETE, ADMIN_ACCESS
 
 from models.comment import Comment
 from models.topic import Topic
@@ -44,7 +42,9 @@ class TopicDetailsHandler(BaseHandler):
 
 
 class DeleteTopicHandler(BaseHandler):
+
     @login_required
+    @validate_csrf
     def post(self, topic_id):
         """ topic soft delete hahdler only by author or admin """
         topic = Topic.get_by_id(int(topic_id))
@@ -53,11 +53,13 @@ class DeleteTopicHandler(BaseHandler):
             Topic.delete(topic)
             return self.redirect_to('main-page')
         else:
-            return show_info_page(self, message=TOPIC_AUTHOR)
+            return self.render_template("error.html", params={"message": TOPIC_AUTHOR})
 
 
-class ReloadTopic(BaseHandler):
+class ReloadTopicHandler(BaseHandler):
+
     @login_required
+    @validate_csrf
     def post(self, topic_id):
         """ topic reload hahdler only by author or admin """
         topic = Topic.get_by_id(int(topic_id))
@@ -66,11 +68,13 @@ class ReloadTopic(BaseHandler):
             Topic.reload(topic)
             return self.redirect_to('main-page')
         else:
-            return self.write('only admin can reload topic')
+            return self.render_template("error.html", params={"message": ADMIN_RELOAD})
 
 
-class DestroyTopic(BaseHandler):
+class DestroyTopicHandler(BaseHandler):
+
     @login_required
+    @validate_csrf
     def post(self, topic_id):
         """ topic hard delete hahdler only by author or admin """
         topic = Topic.get_by_id(int(topic_id))
@@ -79,10 +83,11 @@ class DestroyTopic(BaseHandler):
             Topic.destroy(topic)
             return self.redirect_to('main-page')
         else:
-            return self.write('only admin can delete topic')
+            return self.render_template("error.html", params={"message": ADMIN_DELETE})
 
 
 class DeletedTopicsListHandler(BaseHandler):
+
     @login_required
     def get(self):
         """ list of all deleted topics  to completely delete or renew admin only """
@@ -91,9 +96,9 @@ class DeletedTopicsListHandler(BaseHandler):
         if User.is_admin(user):
             topics = Topic.query(Topic.deleted == True).fetch()
             params = {"topics": topics}
-            return self.render_template("topics/topics_deleted_list.html", params=params)
+            return self.render_template_with_csrf("topics/topics_deleted_list.html", params=params)
         else:
-            return self.write("This page can be accessed only by admin")
+            return self.render_template("error.html", params={"message": ADMIN_ACCESS})
 
 
 
