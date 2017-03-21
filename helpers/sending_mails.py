@@ -6,7 +6,7 @@ from libs.sendgrid.helpers.mail import *
 def new_comment_emil(recipient, topic_title, topic_id):
 
     """ Sending mail when new commment on topic to topic author """
-    sg = sendgrid.SendGridAPIClient(apikey=SENDGRID_API_KEY)
+    # sg = sendgrid.SendGridAPIClient(apikey=SENDGRID_API_KEY)
     from_email = Email("janko.pirih@gmail.com")
     subject = "New Comment on Topic - {}".format(topic_title)
     to_email = Email(recipient)
@@ -19,7 +19,7 @@ def new_comment_emil(recipient, topic_title, topic_id):
 
 def newest_topics_email(recipient, links):
     """ sending mail list of latest topics to subscribers """
-    sg = sendgrid.SendGridAPIClient(api_key=SENDGRID_API_KEY)
+    # sg = sendgrid.SendGridAPIClient(api_key=SENDGRID_API_KEY)
     from_email = Email("janko.pirih@gmail.com")
     subject = "The latest and gratest topics on NinjaTechForum"
     to_email = Email(recipient)

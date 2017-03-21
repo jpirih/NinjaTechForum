@@ -17,7 +17,7 @@ class Comment(ndb.Model):
         comment.put()
 
         # run background task to send email to topic author
-        taskqueue.add(url='/task/email-new-comment', params={"topic_author_email": topic.author_email, "topic_title": topic.title, "topic_id": topic.key.id()})
+        # taskqueue.add(url='/task/email-new-comment', params={"topic_author_email": topic.author_email, "topic_title": topic.title, "topic_id": topic.key.id()})
 
         return comment
 
