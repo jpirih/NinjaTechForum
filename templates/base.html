@@ -10,6 +10,8 @@
 
     <!-- Bootstrap -->
     <link href="/assets/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <!-- Lightbox gallery -->
+    <link rel="stylesheet" href="/assets/lightbox/css/lightbox.css">
     <!-- custom css -->
     <link rel="stylesheet" href="/assets/custom/css/style.css">
 
@@ -33,6 +35,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="/about">About</a></li>
+            <li><a href="/gallery">Gallery</a></li>
             {% if not user %}
               <li><a href="{{ login_url }}">Login</a></li>
             {% else %}
@@ -78,6 +81,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="/assets/bootstrap/js/bootstrap.js"></script>
+    <script src="/assets/lightbox/js/lightbox.js"></script>
             {% block scripts %}
             {% endblock %}
 </body>

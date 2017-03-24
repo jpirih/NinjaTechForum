@@ -6,6 +6,7 @@ from crons.delete_topics import DeleteTopicCron
 from crons.delete_comments import DeleteCommentsCron
 from crons.newest_topics_cron import NewestTopicsCron
 from handlers.base import MainHandler, AboutHandler, CookiesAlertHandler
+from handlers.gallery import GalleryHandler
 from handlers.topics import CreateTopicHandler, TopicDetailsHandler, DeleteTopicHandler, DeletedTopicsListHandler
 from handlers.topics import ReloadTopicHandler, DestroyTopicHandler
 from handlers.users import UserLoginHandler, UserProfileHandler
@@ -18,6 +19,7 @@ app = webapp2.WSGIApplication([
     # base routes
     webapp2.Route('/', MainHandler, name="main-page"),
     webapp2.Route('/about', AboutHandler, name="about-page"),
+    webapp2.Route('/gallery', GalleryHandler, name="gallery"),
     webapp2.Route('/set-cookie', CookiesAlertHandler, name="set-cookie"),
 
     # topics routes
