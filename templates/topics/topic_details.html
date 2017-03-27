@@ -2,13 +2,19 @@
 
 {% block title %} Topic Details {% endblock %}
 
+{% block scripts %}
+    <script src="/assets/custom/js/topic_details.js"></script>
+    <script src="/assets/custom/js/comment_details.js"></script>
+{% endblock %}
 
 {% block content %}
     <!-- delete topic modal  -->
     {% include 'includes/delete_topic_modal.html' %}
+
+
     <div class="row">
         <div class="col-sm-12">
-            <h1 class="page-header text-center">{{ topic.title }}</h1>
+            <h1 class="page-header text-center" id="topic-main-title">{{ topic.title }}</h1>
         </div>
     </div>
     <div class="row">
@@ -19,7 +25,17 @@
                     <span class="bold pull-right">Posted: {{ topic.created_at.strftime(slo_date) }}</span>
                 </div>
                 <div class="panel-body">
-                    {{ topic.content }}
+                    <div id="topic-content">
+                        <p>
+                        {{ topic.content }}
+                    </p>
+                    <p class="text-muted pull-right">
+                        Last update: {{ topic.updated_at.strftime(slo_date) }}
+                    </p>
+                    </div>
+                    <div id="edit-form" hidden>
+                        {% include "includes/topic_edit_form.html" %}
+                    </div>
                 </div>
                 <div class="panel-footer">
                     <a href="/" role="button" class="btn btn-danger btn-sm">
@@ -31,6 +47,7 @@
                         <button type="button" class="btn btn-danger btn-sm pull-right" data-toggle="modal" data-target="#deleteTopicModal">
                           Delete
                         </button>
+                        <button type="button" id="edit-button" class="btn btn-sm btn-warning pull-right">Edit</button>
                     {% endif %}
                 </div>
             </div>
@@ -38,6 +55,8 @@
     </div>
     {% if comments %}
         {% for comment in comments %}
+            <!-- comment details modal -->
+            {% include 'includes/edit_comment_modal.html' %}
             <div class="row">
                 <div class="col-sm-8 col-sm-offset-2">
                     <div class="panel panel-info">
@@ -50,10 +69,9 @@
                         </div>
                         <div class="panel-footer">
                             {% if user.email == comment.author_email or user.admin %}
-                            <form action="/comment/{{ comment.key.id() }}/delete" method="post">
-                                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
-                                <button class="btn btn-danger btn-sm delete-btn">Delete</button>
-                            </form>
+                                <button type="button" class="btn btn-primary btn-sm " data-toggle="modal" data-target="#commentDetailsModal{{ comment.key.id() }}">
+                                  Details
+                                </button>
                             {% endif %}
                         </div>
                     </div>
@@ -72,7 +90,9 @@
                     <form action="/topic/{{ topic.key.id() }}/new-comment" method="post">
                         <input type="hidden" value="{{ csrf_token }}" name="csrf_token">
                         <div class="form-group">
-                            <textarea name="content" id="content" cols="30" rows="10" class="form-control"></textarea>
+                            <textarea name="content" id="content" cols="30" rows="10" class="form-control">
+
+                            </textarea>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-8 col-sm-offset-2">

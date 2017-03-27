@@ -1,0 +1,22 @@
+<!-- list of commments table used in user profile pages  -->
+<table class=" table table-responsive table-bordered table-striped table-hover">
+    <thead>
+        <tr class="table-header">
+            <th>Content</th>
+            <th>Created at</th>
+            <th>Last update</th>
+            <th>Topic Title</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for comment in comments %}
+        {% include "includes/edit_comment_modal.html" %}
+        <tr>
+            <td><a href="#"  data-toggle="modal" data-target="#commentDetailsModal{{ comment.key.id() }}">{{ comment.content }}</a></td>
+            <td>{{ comment.created_at.strftime(slo_date) }}</td>
+            <td>{{ comment.updated_at.strftime(slo_date) }}</td>
+            <td>{{ comment.topic_title }}</td>
+        </tr>
+        {% endfor  %}
+    </tbody>
+</table>

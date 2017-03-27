@@ -1,0 +1,19 @@
+<!-- list of topics used in user profile pages  -->
+<table class=" table table-responsive table-bordered table-striped table-hover">
+    <thead>
+        <tr class="table-header">
+            <th>Title</th>
+            <th>Created at</th>
+            <th>Last update</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for topic in topics %}
+        <tr>
+            <td><a href="/topic/{{ topic.key.id() }}">{{ topic.title }}</a></td>
+            <td>{{ topic.created_at.strftime(slo_date) }}</td>
+            <td>{{ topic.updated_at.strftime(slo_date) }}</td>
+        </tr>
+        {% endfor  %}
+    </tbody>
+</table>

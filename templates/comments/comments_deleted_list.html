@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %} List of Deleted Comments {% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 class="page-header text-center">List of Deleted Comments</h1>
+        </div>
+    </div>
+    <div class="col-sm-8">
+            {% if comments %}
+                <table class="table table-responsive table-bordered table-hover">
+                    <thead>
+                    <tr class="table-header">
+                        <th>Content</th>
+                        <th>Author</th>
+                        <th>Deleted</th>
+                        <th>Reload</th>
+                        <th>Destroy</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for comment in comments %}
+                            <tr>
+                                <td>{{ comment.content }}</td>
+                                <td>{{ comment.author_email }}</td>
+                                <td>{{ comment.updated_at.strftime(slo_date) }}</td>
+                                <td>
+                                    <form action="/comment/{{ comment.key.id() }}/reload" method="post">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                                        <button type="submit" class="btn btn-info btn-sm delete-btn">
+                                            Reload
+                                        </button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="/comment/{{ comment.key.id() }}/destroy" method="post">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                                        <button type="submit" class="btn btn-danger btn-sm  delete-btn">
+                                            Destroy
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="alert alert-info">
+                    <span class="glyphicon glyphicon-info-sign"></span>
+                    There is no Comments maked as deleted at the moment :)
+                </div>
+            {% endif %}
+        </div>
+{% endblock %}

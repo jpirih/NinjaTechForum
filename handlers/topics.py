@@ -56,6 +56,22 @@ class DeleteTopicHandler(BaseHandler):
             return self.render_template("error.html", params={"message": TOPIC_AUTHOR})
 
 
+class EditTopicHandler(BaseHandler):
+    @login_required
+    @validate_csrf
+    def post(self, topic_id):
+        """ edit topic by author or form admin """
+        topic = Topic.get_by_id(int(topic_id))
+        user = User.logged_in_user()
+        if User.is_admin(user) or User.is_author(user, topic):
+            title = self.request.get("title")
+            content = self.request.get("content")
+            Topic.update(topic, title, content)
+            return self.redirect_to("topic-details", topic_id=topic.key.id())
+        else:
+            return self.render_template("error.html", params={"message": TOPIC_AUTHOR})
+
+
 class ReloadTopicHandler(BaseHandler):
 
     @login_required

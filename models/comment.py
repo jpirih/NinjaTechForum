@@ -1,3 +1,5 @@
+""" Datastore model for saving  comments """
+
 from google.appengine.ext import ndb
 from google.appengine.api import taskqueue
 
@@ -13,6 +15,7 @@ class Comment(ndb.Model):
 
     @classmethod
     def create(cls, content, user, topic):
+        """ create new comment  """
         comment = Comment(content=content, author_email=user.email, topic_id=topic.key.id(), topic_title=topic.title)
         comment.put()
 
@@ -22,8 +25,27 @@ class Comment(ndb.Model):
         return comment
 
     @classmethod
+    def update(cls, comment, new_content):
+        """ update existing comment """
+        comment.content = new_content
+        comment.put()
+        return comment
+
+    @classmethod
     def delete(cls, comment):
+        """ comment soft delete  """
         comment.deleted = True
         comment.put()
         return comment
+
+    @classmethod
+    def reload(cls, comment):
+        """ Comment reaload - undo comment soft delete """
+        comment.deleted = False
+        comment.put()
+        return comment
+
+    @classmethod
+    def destroy(cls, comment):
+        return  comment.key.delete()
 

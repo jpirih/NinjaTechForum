@@ -41,12 +41,12 @@ class UserProfileHandler(BaseHandler):
         """ user profile page view """
         current_user = users.get_current_user()
         user = User.get_by_id(int(user_id))
-        my_topics = Topic.query(Topic.author_email == user.email)
-        my_comments = Comment.query(Comment.author_email == user.email)
-        params = {'my_topics': my_topics, 'my_comments': my_comments}
+        topics = Topic.query(Topic.author_email == user.email, Topic.deleted == False)
+        comments = Comment.query(Comment.author_email == user.email, Comment.deleted == False)
+        params = {'topics': topics, 'comments': comments}
 
         if current_user.email() == user.email or User.is_admin(current_user):
-            return self.render_template('users/user_profile.html', params=params)
+            return self.render_template_with_csrf('users/user_profile.html', params=params)
         else:
             return self.render_template("error.html", params={"message": OWNER_MESSAGE})
 

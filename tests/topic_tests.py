@@ -1,8 +1,10 @@
 import webapp2
 
-from handlers.topics import CreateTopicHandler, TopicDetailsHandler, DeleteTopicHandler, ReloadTopicHandler, DestroyTopicHandler, \
-    DeletedTopicsListHandler
+from handlers.topics import CreateTopicHandler, TopicDetailsHandler, DeleteTopicHandler, ReloadTopicHandler, \
+    DestroyTopicHandler, DeletedTopicsListHandler, EditTopicHandler
 from main import MainHandler
+from models.topic import Topic
+from models.user import User
 from tests.helpers import BaseTest
 
 
@@ -12,6 +14,7 @@ class TopicTests(BaseTest):
             webapp2.Route('/', MainHandler, name="main-page"),
             webapp2.Route('/topic/add', CreateTopicHandler, name="add-topic"),
             webapp2.Route('/topic/<topic_id:\d+>', TopicDetailsHandler, name="topic-details"),
+            webapp2.Route('/topic/<topic_id:\d+>/edit', EditTopicHandler, name="topic-edit"),
             webapp2.Route('/topic/<topic_id:\d+>/delete', DeleteTopicHandler, name="topic-delete"),
             webapp2.Route('/topic/<topic_id:\d+>/reload', ReloadTopicHandler, name="topic-reload"),
             webapp2.Route('/topic/<topic_id:\d+>/destroy', DestroyTopicHandler, name="topic-destroy"),
@@ -47,6 +50,24 @@ class TopicTests(BaseTest):
         self.assertEqual(get.status_int, 200)
         self.assertIn("Add Comment", get.body)
 
+    # topic edit test
+    def test_edit_topic_handler_post(self):
+        topic = self.create_fake_topic()
+
+        csrf_token = self.create_fake_fake_token()
+        user_get = User.query().get()
+        self.assertTrue(user_get)
+
+        topic_get = Topic.query().get()
+        self.assertTrue(topic_get)
+
+        title = "Updated topic title"
+        content = " updated topic content"
+        params = {"title": title, "content": content, "csrf_token": csrf_token}
+        post = self.testapp.post('/topic/{}/edit'.format(topic.key.id()), params=params)
+        self.assertEqual(post.status_int, 302)
+
+
     # topic soft delete test
     def test_topic_delete_handler_post(self):
         topic = self.create_fake_topic()
@@ -74,21 +95,17 @@ class TopicTests(BaseTest):
         topic = self.create_fake_topic_deleted()
         topic_get = topic.query().get()
         self.assertTrue(topic_get)
-
-
-
         params = {"csrf_token": csrf_token}
 
         # runs post method
         post = self.testapp.post('/topic/{}/reload'.format(topic.key.id()), params=params)
         self.assertEqual(post.status_int, 302)
 
-        # check if deleted on test topic realy is False
+        # check if deleted on test topic really is False
         reloaded_topic_get = topic.query().get()
         self.assertFalse(reloaded_topic_get.deleted)
 
-
-    # topic destroy by admin - deleted completly
+    # topic destroy by admin - deleted completely
     def test_topic_destroy_handler_post(self):
         # test user  with admin privileges
         user = self.create_fake_admin()
@@ -117,6 +134,7 @@ class TopicTests(BaseTest):
         user = self.create_fake_admin()
         user_get = user.query().get()
         self.assertTrue(user_get)
+        self.assertTrue(user_get.admin)
 
         topic = self.create_fake_topic_deleted()
         topic_get = topic.query().get()
@@ -125,4 +143,4 @@ class TopicTests(BaseTest):
         get = self.testapp.get('/topics-deleted-list')
         self.assertEqual(get.status_int, 200)
         self.assertIn("List of Deleted topics", get.body)
-
+        self.assertIn(topic.title, get.body)
