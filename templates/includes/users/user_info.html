@@ -1,0 +1,16 @@
+<div class="panel panel-info">
+    <div class="panel-heading">
+        User Info
+    </div>
+    <div class="panel-body">
+        <div>
+            <img src="/assets/custom/img/user_profile.png" alt="profile_img" class="img img-rounded img-responsive">
+        </div>
+        <h3>
+            {{ user.first_name }} {{ user.last_name }} -
+            <span class="text-muted">{{ user.nickname }}</span>
+        </h3>
+        <h5>{{ user.email }}</h5>
+        <h5>{{ user.birth_date }}</h5>
+    </div>
+</div>

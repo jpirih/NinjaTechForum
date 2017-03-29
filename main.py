@@ -8,11 +8,11 @@ from crons.newest_topics_cron import NewestTopicsCron
 from handlers.base import MainHandler, AboutHandler, CookiesAlertHandler
 from handlers.gallery import GalleryHandler
 from handlers.topics import CreateTopicHandler, TopicDetailsHandler, DeleteTopicHandler, DeletedTopicsListHandler, \
-    EditTopicHandler
+    EditTopicHandler, TopicsListHandler
 from handlers.topics import ReloadTopicHandler, DestroyTopicHandler
 from handlers.users import UserLoginHandler, UserProfileHandler
 from handlers.comments import CreateCommentHandler, DeleteCommentHandler, EditCommentHandler, ReloadCommentHandler, \
-    DestroyCommentHandler, DeletedCommentsListHandler
+    DestroyCommentHandler, DeletedCommentsListHandler, CommentsListHandler
 from handlers.subscriptions import SubscribeToNewTopics
 from workers.email_comment_worker import EmailNewCommentWorker
 
@@ -32,6 +32,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/topic/<topic_id:\d+>/reload', ReloadTopicHandler, name="topic-reload"),
     webapp2.Route('/topic/<topic_id:\d+>/destroy', DestroyTopicHandler, name="topic-destroy"),
     webapp2.Route('/topics-deleted-list', DeletedTopicsListHandler, name="topic-deleted-list"),
+    webapp2.Route('/topics', TopicsListHandler, name="topics-list"),
 
     # comments routes
     webapp2.Route('/topic/<topic_id:\d+>/new-comment', CreateCommentHandler, name="create-comment"),
@@ -40,6 +41,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/comment/<comment_id:\d+>/reload', ReloadCommentHandler , name="comment-reload"),
     webapp2.Route('/comment/<comment_id:\d+>/destroy', DestroyCommentHandler , name="comment-destroy"),
     webapp2.Route('/comments-deleted-list', DeletedCommentsListHandler , name="deleted-comments-list"),
+    webapp2.Route('/comments', CommentsListHandler , name="comments-list"),
     webapp2.Route('/subscribe/new-topics', SubscribeToNewTopics, name="subscribe-new-topics"),
 
     # users routes

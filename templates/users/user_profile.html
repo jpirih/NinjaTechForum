@@ -18,34 +18,16 @@
     <div class="row">
         <!-- left column user info and admin nav -->
         <div class="col-sm-4">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div>
-                        <img src="/assets/custom/img/user_profile.png" alt="profile_img" class="img img-rounded img-responsive">
-                    </div>
-                    <h3>
-                        {{ user.first_name }} {{ user.last_name }} -
-                        <span class="text-muted">{{ user.nickname }}</span>
-                    </h3>
-                    <h5>{{ user.email }}</h5>
-                    <h5>{{ user.birth_date }}</h5>
-                </div>
-                <div class="panel-footer">
-                    {% if user.admin %}
-                    <a href="/topics-deleted-list" class="btn btn-danger">
-                        Deleted Topics List
-                    </a>
-                    <a href="/comments-deleted-list" class="btn btn-danger">
-                        Deleted Comments List
-                    </a>
-                    {% endif %}
-                </div>
-            </div>
+            {% include "includes/users/user_info.html" %}
+            {% if user.admin %}
+                <h3>Admin Tools </h3>
+                {% include "includes/users/admin_tools.html" %}
+            {% endif %}
         </div>
         <div class="col-sm-8">
             <!-- user topics and user comments  -->
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-  <div class="panel panel-primary">
+  <div class="panel panel-info">
     <div class="panel-heading" role="tab" id="headingOne">
       <h4 class="panel-title">
         <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -58,7 +40,7 @@
           <h3>My topics</h3>
         <br>
         {% if topics %}
-            {% include "includes/user_topics_list.html" %}
+            {% include "includes/users/user_topics_list.html" %}
         {% else %}
             <div class="alert alert-info">
                 <span class="glyphicon glyphicon-info-sign"></span>
@@ -68,7 +50,7 @@
       </div>
     </div>
   </div>
-  <div class="panel panel-primary">
+  <div class="panel panel-info">
     <div class="panel-heading" role="tab" id="headingTwo">
       <h4 class="panel-title">
         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -80,7 +62,7 @@
       <div class="panel-body">
         <h3>My Comments</h3>
         <br>
-        {% include "includes/user_comments_list.html" %}
+        {% include "includes/users/user_comments_list.html" %}
       </div>
     </div>
   </div>

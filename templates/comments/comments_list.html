@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}All comments list{% endblock %}
+{% block scripts %}
+    <script src="/assets/custom/js/comment_details.js"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 class="page-header text-center">List of all comments</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-8">
+            {% include "includes/users/user_comments_list.html" %}
+        </div>
+    </div>
+{% endblock %}

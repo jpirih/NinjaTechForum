@@ -7,6 +7,18 @@ from models.topic import Topic
 from models.user import User
 
 
+# Show all comments
+class CommentsListHandler(BaseHandler):
+    @login_required
+    def get(self):
+        user = User.logged_in_user()
+        if User.is_admin(user):
+            comments  = Comment.query(Comment.deleted == False).order(-Comment.created_at).fetch()
+            params = {"comments": comments}
+            return self.render_template_with_csrf("comments/comments_list.html", params=params)
+        else:
+            return self.render_template("error.html", params={"message": ADMIN_ACCESS})
+
 # create new comment
 class CreateCommentHandler(BaseHandler):
     @login_required
@@ -36,6 +48,7 @@ class EditCommentHandler(BaseHandler):
             return self.redirect_to("topic-details", topic_id=int(commment.topic_id))
         else:
             return self.render_template("error.html", params={"message": COMMENT_AUTHOR})
+
 
 # delete comment -soft delete
 class DeleteCommentHandler(BaseHandler):

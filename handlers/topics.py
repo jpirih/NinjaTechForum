@@ -7,6 +7,14 @@ from models.topic import Topic
 from models.user import User
 
 
+# list of all topic for admin user to see
+class TopicsListHandler(BaseHandler):
+    @login_required
+    def get(self):
+        topics = Topic.query(Topic.deleted == False).order(-Topic.created_at).fetch()
+        params = {"topics": topics}
+        return  self.render_template("topics/topics_list.html", params=params)
+
 class CreateTopicHandler(BaseHandler):
     @login_required
     def get(self):
